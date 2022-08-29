@@ -1,0 +1,231 @@
+%-------------------------------------------------------------------------------
+%                      Template Naskah Skripsi
+%               	Berdasarkan format JTETI FT UGM
+% 						(c) @gunturdputra 2014
+%-------------------------------------------------------------------------------
+
+%Template pembuatan naskah skripsi.
+\documentclass{jtetiskripsi}
+
+%Untuk prefiks pada daftar gambar dan tabel
+\usepackage[titles]{tocloft}
+\renewcommand\cftfigpresnum{Gambar\  }
+\renewcommand\cfttabpresnum{Tabel\   }
+
+%Untuk hyperlink dan table of content
+\usepackage[hidelinks]{hyperref}
+\newlength{\mylenf}
+\settowidth{\mylenf}{\cftfigpresnum}
+\setlength{\cftfignumwidth}{\dimexpr\mylenf+2em}
+\setlength{\cfttabnumwidth}{\dimexpr\mylenf+2em}
+
+%Untuk Bold Face pada Keterangan Gambar
+\usepackage[labelfont=bf]{caption}
+
+%Untuk caption dan subcaption
+\usepackage{caption}
+\usepackage{subcaption}
+
+%pdf
+\usepackage{pdfpages}
+
+%table
+\usepackage{graphics}
+
+\usepackage{wrapfig}
+
+%equation
+\usepackage{amsmath}
+
+%hypenat
+\usepackage[none]{hyphenat}
+
+%bibliography
+\usepackage{natbib}
+
+%directory tree
+\usepackage{dirtree}
+
+%code
+\usepackage{listings}
+
+%-----------------------------------------------------------------
+%Disini awal masukan untuk data proposal skripsi
+%-----------------------------------------------------------------
+\titleind{Deteksi Keliling Luka Kronis menggunakan \emph{Active Contour} (\emph{snake}) dan \emph{Active Contour} yang ditambahkan Interpolasi}
+
+%\titleind{Kritik Algoritma \emph{Active Contour} dalam Lokalisasi Tepi terhadap Kasus Tepi Luka dengan Membandingkan Metode \emph{Original} dengan Metode yang Ditambahkan Interpolasi}
+
+\fullname{Muhamad Rizki}
+
+\idnum{3145160661}
+
+%\approvaldate{-}
+\approvaldate{-}
+
+\degree{Sarjana Ilmu Komputer}
+
+\yearsubmit{2022}
+
+\program{Ilmu Komputer}
+
+\dept{Ilmu Komputer}
+
+% \firstsupervisor{Med Irzal, M. Kom.}
+% \firstnip{197706152003121001}
+
+% \firstsupervisor{Ir. Fariani Hermin Indiyah, MT}
+% \firstnip{196002111987032001}
+
+\firstsupervisor{Med Irzal, M. Kom.}
+\firstnip{197706152003121001}
+
+\secondsupervisor{Muhammad Eka Suryana, M. Kom.}
+\secondnip{198512232012121002}
+
+%hypenation
+
+
+%-----------------------------------------------------------------
+%Disini akhir masukan untuk data proposal skripsi
+%-----------------------------------------------------------------
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\begin{document}
+\cover
+%\include{pengesahan}
+%\include{persetujuan}
+
+
+\include{orisinalitas}
+%-----------------------------------------------------------------
+
+%-----------------------------------------------------------------
+%Disini awal masukan Acknowledment
+%-----------------------------------------------------------------
+\acknowledgment
+\begin{flushright}
+	\emph{Untuk Bapak, Ibu, dan Keluargaku}
+\end{flushright}
+%-----------------------------------------------------------------
+%Disini awal masukan untuk Prakata
+%-----------------------------------------------------------------
+
+
+%-----------------------------------------------------------------
+%Disini awal masukan untuk Prakata
+%-----------------------------------------------------------------
+\preface
+\pagestyle{chapterheading}
+Atas berkat rahmat Allah Yang Maha Kuasa, penulis bisa menyelesaikan skripsi yang berjudul \textbf{"Deteksi Keliling Luka Kronis menggunakan \emph{Active Contour} (\emph{snake}) dan \emph{Active Contour} yang ditambahkan \emph{Preprocessing} Interpolasi"}. Selain itu penulis juga berterima kasih kepada pihak-pihak pendukung dan mendoakan semoga kebaikan dan jasa-jasa yang sudah diberikan dibalas Allah Yang Maha Kuasa. Adapun pihak-pihak tersebut sebagai berikut:
+
+\begin{enumerate}
+	\item Yth. Ibu Ir. Fariani Hermin Indiyah, M. T. selaku Koordinator Program Studi S-1 Ilmu Komputer Universitas Negeri Jakarta sekaligus dosen pembimbing akademik yang sudah membimbing penulis dalam hal akademik,
+	\item Yth. Bapak Med Irzal, M. Kom. selaku dosen pembimbing I yang banyak memberikan bantuan, masukan, dan saran baik secara konten maupun penulisan,
+	\item Yth. Bapak Muhammad Eka Suryana, M. Kom. selaku dosen pembimbing II yang banyak memberikan bantuan, masukan, dan saran baik secara konten maupun penulisan,
+	\item Yth. Ibu Ns. Ratna Aryani, M.Kep. beserta tim peneliti yang telah menyediakan dataset luka untuk untuk penulis,
+	\item Yth. Seluruh dosen program studi S-1 Ilmu Komputer yang sudah memberikan banyak ilmu kepada penulis selama perkuliahan,
+	\item Yth. Kedua orang tua penulis yang selama ini telah senantiasa sabar membimbing, memberikan semangat, mengingatkan, dan mendo’akan penulis,
+	\item Yth. Teman-teman Ilmu Komputer angkatan 2016 yang senantiasa menemani, memberikan semangat, dan motivasi dari semenjak awal dunia perkuliahan,
+\end{enumerate}
+
+Merupakan kekurangan dari pribadi penulis jika masih ditemukan banyak kesalahan di dalam ini. Penulis sangat berterima kasih jika terdapat saran-saran membangun terkait skripsi penulis.
+
+\vspace{.5cm}
+
+\begin{tabular}{p{7.5cm}c}
+	&Depok, 31 Januari 2022\\
+	&\\
+	&\\
+	&\\
+	&\\
+	&\textbf{Muhamad Rizki}
+\end{tabular}
+%-----------------------------------------------------------------
+%Disini awal masukan Intisari
+%-----------------------------------------------------------------
+\begin{abstractind}
+	\textbf{Muhamad Rizki}. 	\textbf{Deteksi Keliling Luka Kronis menggunakan \emph{Active Contour} (\emph{snake}) dan \emph{Active Contour} yang ditambahkan \emph{Preprocessing} Interpolasi}. Skripsi. Fakultas Matematika dan Ilmu Pengetahuan Alam, Universitas Negeri Jakarta. 2022. Di bawah bimbingan Med Irzal, M. Kom. dan Muhammad Eka Suryana, M. Kom
+	\vskip1cm
+	
+	Luka kronis menjadi permasalahan bagi perawat luka dan instansi kesehatan terkait. Salah satu hal mendasar dalam penyembuhan luka kronis adalah melihat ukuran luka yang akan diamati dalam proses \emph{assesment} luka yang saat ini masih dilakukan secara manual dan hal tersebut rentan dengan ketidakakuratan. Untuk mengatasi ketidakakuratan pengukuran manual, maka metode pengukuran keliling luka berbasis analisa citra (image), khususnya citra biomedis (\emph{biomedical image}) dan citra medis (\emph{medical image}) perlu dikembangkan. Skripsi ini bertujuan untuk mengimplementasi dan melihat hasil metode \emph{active contour} (\emph{snake}) dalam kasus deteksi keliling luka kronis. Implementasi yang dikembangkan menggunakan metode \emph{snake} dengan \emph{snake} yang ditambahkan interpolasi untuk deteksi keliling luka kategori luka hitam, kuning, dan merah. Hasil akhir menunjukkan bahwa data yang berhasil dideteksi menggunakan \emph{snake} interpolasi (44 data dari 71 data) lebih banyak dibandingkan versi \emph{integer} (12 data dari 71 data) dengan nilai akurasi rata-rata 77.18\% untuk \emph{snake} versi integer dan 86.1\% untuk \emph{snake} versi interpolasi
+	
+	\bigskip
+	\noindent
+	\textbf{Kata kunci :} Luka kronis, \emph{active contour}, deteksi keliling, interpolasi.
+\end{abstractind}
+
+\begin{abstracteng}
+	
+	\textbf{Muhamad Rizki}. 	\textbf{Detection of Chronic Wound Circumference using Active Contour(snake) and Active Contour with added Interpolation}. Thesis. Faculty of Mathematics and Natural Sciences, State University of Jakarta. 2022. Under the guidance of Med Irzal, M. Kom. and Muhammad Eka Suryana, M. Kom
+	\vskip1cm
+	
+	Chronic wounds are a problem for wound nurses and related health agencies. One of the basic things in chronic wound healing is to see the size of the wound that will be observed in the wound assessment process, which is currently still done manually and is prone to inaccuracies. To overcome the inaccuracy of manual measurements, the method of measuring wound circumference based on image analysis, especially biomedical images and medical images, needs to be developed. This thesis aims to implement and see the results of the active contour (snake) method in the case of chronic wound circumference detection. The implementation developed uses the snake method with a snake added by interpolation to detect the circumference of the wound in the black, yellow, and red categories. The final result shows that the data detected using snake interpolation (44 data from 71 data) is more than the integer version (12 data from 71 data) with an average accuracy value of 77.18\% for the integer version of the snake and 86.1\% for the interpolated version of the snake.
+	
+	\bigskip
+	\noindent
+	\textbf{key word :} Chronic wound, active contour, circumference detection, interpolation
+\end{abstracteng}
+
+
+%-----------------------------------------------------------------
+%Disini akhir masukan Intisari
+%-----------------------------------------------------------------
+%-----------------------------------------------------------------
+
+
+%-----------------------------------------------------------------
+%Disini akhir masukan untuk muka skripsi
+%-----------------------------------------------------------------
+\tableofcontents 
+\addcontentsline{toc}{chapter}{DAFTAR ISI}
+\listoffigures
+\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+\listoftables
+\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\pagestyle{chapterheading}
+
+
+
+\begin{counterpage}
+\end{counterpage}
+
+\pagestyle{myheadings}
+\markright{}
+%Disini awal masukan untuk Bab
+%-----------------------------------------------------------------
+\include{bab1}
+\include{bab2}
+\include{bab3}
+\include{bab4}
+\include{bab5}
+
+%-----------------------------------------------------------------
+%Disini akhir masukan Bab
+%-----------------------------------------------------------------
+
+
+%-----------------------------------------------------------------
+% Disini awal masukan untuk Daftar Pustaka
+% - Daftar pustaka diambil dari file .bib yang ada pada folder ini
+%   juga.
+% - Untuk memudahkan dalam memanajemen dan menggenerate file .bib
+%   gunakan reference manager seperti Mendeley, Zotero, EndNote,
+%   dll.
+%-----------------------------------------------------------------
+\begingroup
+	\setlength{\bibsep}{12pt}
+	\setstretch{1}
+	\bibliography{daftar-pustaka}
+	\bibliographystyle{apa}
+	\addcontentsline{toc}{chapter}{DAFTAR PUSTAKA}
+\endgroup
+%-----------------------------------------------------------------
+%Disini akhir masukan Daftar Pustaka
+%-----------------------------------------------------------------
+\include{lampiran}
+\end{document}
