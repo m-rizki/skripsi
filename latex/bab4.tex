@@ -31,7 +31,7 @@ Rincian hasil dari proses ini tersedia di bagian \emph{lampiran C dan D}. Beriku
 		c = cc + rad*np.cos(s)
 		snake_init = np.array([r, c]).T
 		
-		snake_xy = snake_init[:, ::-1]
+		snake_xy = snake_init[:, ::-1].astype(int)
 		x = snake_xy[:, 0]
 		y = snake_xy[:, 1]
 	\end{lstlisting}
@@ -120,14 +120,14 @@ Berikut \emph{source code} yang bekerja dengan baik untuk proses update iterasi 
 			fy = np.array([])
 			
 			for i in range(n):
-				fx = np.append(fx, gx[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
-				fy = np.append(fy, gy[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
+				fx = np.append(fx, gx[yt[i]] [xt[i]] )
+				fy = np.append(fy, gy[yt[i]] [xt[i]] )
 			
 			xn = np.dot(inv, xt + gamma * fx) # acton, ivins equation
 			yn = np.dot(inv, yt + gamma * fy)
 			
-			xt = xn
-			yt = yn
+			xt = np.round(xn).astype(int)
+			yt = np.round(yn).astype(int)
 		
 		snake_final = np.array([xt, yt]).T
 	\end{lstlisting}
@@ -181,27 +181,27 @@ Metode \emph{snake} versi \emph{integer} dan interpolasi memakai metode gradien 
 
 Proses iterasi dilakukan sebanyak \texttt{max\_num\_iter} kali dan yang dilakukan adalah mengupdate nilai \texttt{fx} dan \texttt{fy}. Untuk versi \emph{integer} nilai \texttt{fx} dan \texttt{fy} dapat dihitung secara langsung karena nilainya tersedia di dalam \texttt{gx} dan \texttt{gy} sedangkan untuk versi interpolasi nilainya harus didapatkan melalui proses interpolasi. 
 
-Bentuk kurva \emph{snake} untuk setiap iterasi terdiri dari pasangan koordinat dengan nilai \emph{float}, hal ini menimbulkan masalah pada operasi \emph{finding contour} di setiap iterasi yang menghasilkan koordinat bilangan \emph{float}. Kurva harus diletakkan di atas citra yang menyebabkan terjadi \emph{missing value} pada kurva jika nilai koordinatnya terdiri dari nilai \emph{float}. Untuk untuk mengatasi masalah ini pada \emph{snake} versi integer dilakukan pembulatan (integer) pada kurva dan untuk \emph{snake} versi interpolasi dilakukan proses interpolasi yang mana hal ini diperlukan agar bentuk kurva \emph{snake} tetap terdiri dari pasangan koordinat dengan nilai \emph{float}.
+Bentuk kurva \emph{snake} untuk setiap iterasi terdiri dari pasangan koordinat dengan nilai \emph{float}, hal ini menimbulkan masalah pada operasi \emph{finding contour} di setiap iterasi yang menghasilkan koordinat bilangan \emph{float}. Kurva harus diletakkan di atas citra yang menyebabkan terjadi \emph{missing value} pada kurva jika nilai koordinatnya terdiri dari nilai \emph{float}. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{gambar/curve_vector}
 	\caption{Bentuk kurva \emph{snake} terdiri dari pasangan koordinat dengan nilai \emph{float} }
 	\label{Gambar:snake_float}
 \end{figure}
+Untuk mengatasi masalah ini, pada \emph{snake} versi integer dilakukan pembulatan (integer) terhadap kurva.
+%Untuk \emph{snake} versi interpolasi dilakukan proses interpolasi yang mana hal ini diperlukan agar bentuk kurva \emph{snake} tetap terdiri dari pasangan koordinat dengan nilai \emph{float}.
+Selanjutnya untuk versi interpolasi, peneliti melakukan \emph{tracing} terhadap metode \emph{snake} yang ada di \emph{library scikit-image} dan menemukan sesuatu pada \emph{library} tersebut terdapat modifikasi dari \emph{snake} integer dengan menambahkan interpolasi, sisanya dihipotesiskan sebagai \emph{code minor}. Kontribusi terbesar pada penelitian ini terdapat pada penemuan bahwa interpolasi dibutuhkan untuk menjalankan \emph{snake}. 
 
-
-Peneliti melakukan \emph{tracing} terhadap metode \emph{snake} yang ada di \emph{library scikit-image} dan menemukan sesuatu pada \emph{library} tersebut terdapat modifikasi dari \emph{snake} integer dengan menambahkan interpolasi, sisanya dihipotesiskan sebagai \emph{code minor}. Interpolasi dapat dianggap dalam langkah \emph{preprocessing} terhadap citra asli
+Proses interpolasi yang dilakukan \emph{library scikit-image} adalah dengan memanggil \emph{Class} \texttt{RectBivariateSpline} \citep{acm}. \emph{Class} ini menggunakan pendekatan \emph{bivariate spline} di atas \emph{rectangular mesh}, dalam hal ini adalah citra (matriks). \texttt{RectBivariateSpline} dapat digunakan untuk interpolasi data \citep{rbs}. Proses interpolasi yang dilakukan \emph{library scikit-image} dapat dianggap dalam langkah \emph{preprocessing} terhadap citra asli yang mana pengaruhnya adalah arah tepinya semakin jelas dibanding dengan citra asli.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{gambar/compare_ori_interp}
-	\caption{(a) citra asli (b) citra hasil interpolasi}
+	\caption{komparasi gradien citra arah (\emph{direction}) $y$ (\texttt{gy}). (a) citra asli (b) citra hasil interpolasi}
 	\label{Gambar:compare_ori_interp}
 \end{figure}
-Kontribusi terbesar pada penelitian ini terdapat pada penemuan bahwa interpolasi dibutuhkan untuk menjalankan \emph{snake} agar nilai koordinat pada kurva tetap menjadi bilangan \emph{float}.
+Proses untuk mendapatkan nilai \texttt{fx} dan \texttt{fy} pada \emph{snake} versi interpolasi adalah dengan menggunakan \emph{class} \texttt{RectBivariateSpline} milik \texttt{scipy} \citep{rbs}. Dengan memanggil metode \texttt{RectBivariateSpline} kita dapat mendapatkan nilai \texttt{fx} dan \texttt{fy} terhadap elemen kurva yang berupa bilangan \emph{float}. Sayangnya pada saat melakukan penelitian penulis tidak menemukan algoritma bagaimana cara mendapatkan nilai \texttt{fx} dan \texttt{fy} menggunakan \texttt{RectBivariateSpline} karena \emph{source code} milik \emph{scipy} sangat kompleks.
 
-Proses interpolasi untuk mendapatkan nilai \texttt{fx} dan \texttt{fy} dilakukan menggunakan \emph{class} \texttt{RectBivariateSpline} milik \texttt{scipy} \citep{rbs}. \emph{Class} ini menggunakan pendekatan \emph{bivariate spline} di atas \emph{rectangular mesh}, dalam hal ini adalah citra (matriks). \texttt{RectBivariateSpline} dapat digunakan untuk interpolasi data. Dengan memanggil metode \texttt{RectBivariateSpline} kita dapat mendapatkan nilai \texttt{fx} dan \texttt{fy} pada posisi tertentu.
-
-Selanjutnya untuk proses update kurva versi \emph{integer} perhitungannya dapat menggunakan persamaan (\ref{implicit_x}) dan (\ref{implicit_y}), sedangkan pada versi interpolasi penulis menggunakan persamaan milik \emph{skimage} \citep{acm} karena jika menggunakan persamaan (\ref{implicit_x}) dan (\ref{implicit_y}) kurva tidak mau bergerak. persamaan ini memodifikasi sedikit dari persamaan \emph{snake} asli dengan penambahan kode untuk membatasi pergerakan kurva tidak lebih dari \texttt{max\_px\_move}. Setelah selesai mengupdate kurva, kurva akhir disimpan kedalam variabel \texttt{snake\_final}.
+Selanjutnya untuk proses update kurva versi \emph{integer} perhitungannya dapat menggunakan persamaan (\ref{implicit_x}) dan (\ref{implicit_y}), sedangkan pada versi interpolasi penulis menggunakan persamaan milik \emph{skimage} \citep{acm} karena jika menggunakan persamaan (\ref{implicit_x}) dan (\ref{implicit_y}) kurva tidak mau bergerak. Persamaan ini memodifikasi sedikit dari persamaan \emph{snake} asli dengan penambahan kode untuk membatasi pergerakan kurva tidak lebih dari \texttt{max\_px\_move}. Setelah selesai mengupdate kurva, kurva akhir disimpan kedalam variabel \texttt{snake\_final}.
 
 \begin{comment}
 	Penulis menemukan sesuatu yang aneh ketika melihat persamaan milik \emph{skimage} yang mana persamaan ini berbeda dengan persamaan asli \emph{snake} asli milik Kass \citep{kass1988snakes:21}, padahal pada \emph{source code} milik skimage dikatakan bahwa mereka mengimplementasikan metode asli milik Kass. Hal ini menunjukkan bahwa skimage tidak jujur ketika mereka mengubah metode \emph{snake} milik Kass. 
@@ -216,7 +216,7 @@ Selanjutnya untuk proses update kurva versi \emph{integer} perhitungannya dapat 
 
 
 \section{Eksperimen}
-Rancangan eksperimen deteksi keliling luka menggunakan \emph{snake} dan \emph{snake} yang ditambahkan interpolasi dilakukan dengan menjalankan program \emph{snake} hingga kurva akhir menutupi objek luka pada citra untuk semua data (populasi) yang tersedia. Proses ini memerlukan penyesuaian parameter algoritma \emph{snake} untuk setiap citra. Dari hasil yang didapatkan terdapat dua kategori hasil deteksi, yang pertama adalah kurva hasil deteksi berhasil menutupi luka (berhasil) dan kurva hasil deteksi tidak berhasil menutupi luka (gagal). Rincian parameter dan hasil dari proses deteksi tersedia di bagian \emph{lampiran C dan D}
+\emph{Source code} eksperimen disimpan ke dalam repository yang dapat diakses di \url{https://github.com/m-rizki/skripsi} di bawah lisensi \emph{GNU General Public License v3.0}. Rancangan eksperimen deteksi keliling luka menggunakan \emph{snake} dan \emph{snake} yang ditambahkan interpolasi dilakukan dengan menjalankan program \emph{snake} hingga kurva akhir menutupi objek luka pada citra untuk semua data (populasi) yang tersedia. Proses ini memerlukan penyesuaian parameter algoritma \emph{snake} untuk setiap citra. Dari hasil yang didapatkan terdapat dua kategori hasil deteksi, yang pertama adalah kurva hasil deteksi berhasil menutupi luka (berhasil) dan kurva hasil deteksi tidak berhasil menutupi luka (gagal). Rincian parameter dan hasil dari proses deteksi tersedia di bagian \emph{lampiran C dan D}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{gambar/result_good_bad}
@@ -245,6 +245,43 @@ Berikut analisa hasil setelah melakukan eksperimen terhadap populasi:
 	\item Hasil dari deteksi keliling luka menggunakan \emph{snake} versi \emph{integer} untuk semua kategori menghasilkan 12 data (dari 71 data) yang kurva akhirnya berhasil menutupi luka dengan nilai akurasi rata-rata 77.18\%.
 	\item Hasil dari deteksi keliling luka menggunakan \emph{snake} versi \emph{integer} untuk semua kategori menghasilkan 44 data (dari 71 data) yang kurva akhirnya berhasil menutupi luka dengan nilai akurasi rata-rata 86.1\%.
 \end{enumerate}
+
+Sebagai tambahan, setelah dicek kembali ternyata terdapat kesalahan pada saat proses update iterasi kurva untuk metode \emph{snake} versi \emph{integer}. Sebelumnya penulis melakukan pembulatan terhadap kurva di luar iterasi dan di dalam iterasi, tetapi ternyata seharusnya penulis cukup melakukan proses pembulatan pada saat perhitungan \texttt{fx} dan \texttt{fy} di dalam iterasi saja sehingga kurva akhirnya tetap terdiri dari koordinat yang nilainya \emph{float}. Jika dibandingkan hasilnya sebagai berikut.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{gambar/compare_int}
+	\caption{(a) Hasil \emph{snake} versi integer dengan pembulatan kurva di luar dan di dalam iterasi  (b) Hasil \emph{snake} versi integer dengan pembulatan kurva hanya di dalam iterasi}
+	\label{Gambar:compare_int}
+\end{figure}
+
+\begin{figure}[H]
+	\begin{lstlisting}[language=Python, basicstyle=\tiny]
+		# potential force
+		gy, gx = np.gradient(ext)
+		
+		xt = np.copy(x)
+		yt = np.copy(y)
+		
+		max_num_iter=n
+		for i in range(max_iter):
+		fx = np.array([])
+		fy = np.array([])
+		
+		for i in range(n):
+		fx = np.append(fx, gx[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
+		fy = np.append(fy, gy[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
+		
+		xn = np.dot(inv, xt + gamma * fx) # acton, ivins equation
+		yn = np.dot(inv, yt + gamma * fy)
+		
+		xt = xn
+		yt = yn
+		
+		snake_final = np.array([xt, yt]).T
+	\end{lstlisting}
+	\caption{\emph{source code} proses update iterasi kurva versi \emph{integer} dengan pembulatan kurva hanya di dalam iterasi}
+	\label{code:snake_evol_int_2}
+\end{figure}
 
 
 \begin{comment}
