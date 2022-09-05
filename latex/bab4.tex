@@ -23,7 +23,7 @@ fungsi \texttt{imread} dan \texttt{rgb2gray} di-\emph{import} dari \emph{library
 Proses deteksi keliling luka menggunakan \emph{snake} versi asli \emph{integer} dan metode \emph{snake} yang ditambahkan interpolasi yang datanya berupa nilai \emph{float}. Berikut tahapannya:
 
 \subsection{Inisialisasi kurva awal}
-Rincian hasil dari proses ini tersedia di bagian \emph{lampiran C dan D}. Berikut \emph{source code} yang bekerja dengan baik untuk inisialisasi kurva awal:
+Rincian hasil dari proses ini tersedia di bagian \textbf{lampiran C dan D}. Berikut \emph{source code} yang bekerja dengan baik untuk inisialisasi kurva awal:
 \begin{figure}[H]
 	\begin{lstlisting}[language=Python, basicstyle=\tiny]
 		theta = np.linspace(0, 2*np.pi, num_of_sample)
@@ -79,7 +79,7 @@ Potongan kode (\ref{Gambar:circle_integer}) dan (\ref{Gambar:circle_float}) diim
 	\caption{\emph{source code} untuk menghasilkan energi internal}
 	\label{code:energy_internal}
 \end{figure}
-Penulis mengimplementasi (\ref{matriks_m}) dengan memanggil beberapa fungsi dari \emph{library numpy}. Fungsi \texttt{np.eye(n)} menghasilkan matriks identitas dengan ukuran \texttt{n x n}. \texttt{np.roll} digunakan untuk mengubah nilai pada diagonal tertentu pada suatu matriks. \texttt{np.linalg.inv} digunakan untuk menghitung invers matriks. Variabel \texttt{a} dan \texttt{b} masing masing mewakili $p$ dan $q$ pada matriks (\ref{matriks_m}). \texttt{eye\_n} adalah matriks identitas dengan ukuran \texttt{n x n} di mana \texttt{n} adalah panjang dari vektor kurva \emph{snake}. \texttt{a\_axis}, \texttt{b\_axis}, dan \texttt{c\_axis} masing-masing adalah elemen matriks yang mengisi $p$, $q$, dan $r$ pada matriks (\ref{matriks_m}). \texttt{A + gamma * eye\_n} adalah cara untuk membuat elemen-elemen pada matriks sesuai dengan $p$, $q$, dan $r$ pada matriks (\ref{matriks_m}). Matriks energi internal kemudian dihitung inversnya dan invers dari matriks tersebut disimpan kedalam variabel \texttt{inv} untuk digunakan pada persamaan update kurva \emph{snake}. Parameter $\alpha$, $\beta$, dan \emph{time step} untuk setiap data tersedia di bagian \emph{lampiran C dan D}
+Penulis mengimplementasi (\ref{matriks_m}) dengan memanggil beberapa fungsi dari \emph{library numpy}. Fungsi \texttt{np.eye(n)} menghasilkan matriks identitas dengan ukuran \texttt{n x n}. \texttt{np.roll} digunakan untuk mengubah nilai pada diagonal tertentu pada suatu matriks. \texttt{np.linalg.inv} digunakan untuk menghitung invers matriks. Variabel \texttt{a} dan \texttt{b} masing masing mewakili $p$ dan $q$ pada matriks (\ref{matriks_m}). \texttt{eye\_n} adalah matriks identitas dengan ukuran \texttt{n x n} di mana \texttt{n} adalah panjang dari vektor kurva \emph{snake}. \texttt{a\_axis}, \texttt{b\_axis}, dan \texttt{c\_axis} masing-masing adalah elemen matriks yang mengisi $p$, $q$, dan $r$ pada matriks (\ref{matriks_m}). \texttt{A + gamma * eye\_n} adalah cara untuk membuat elemen-elemen pada matriks sesuai dengan $p$, $q$, dan $r$ pada matriks (\ref{matriks_m}). Matriks energi internal kemudian dihitung inversnya dan invers dari matriks tersebut disimpan kedalam variabel \texttt{inv} untuk digunakan pada persamaan update kurva \emph{snake}. Parameter $\alpha$, $\beta$, dan \emph{time step} untuk setiap data tersedia di bagian \textbf{lampiran C dan D}
 
 \subsection{Energi eksternal}
 Untuk versi \emph{integer} energi eksternal menggunakan persamaan (\ref{eext2}). Untuk versi interpolasi yang dipilih adalah persamaan \ref{eext4}, kemudian persamaan \ref{eext4} diproses lagi menggunakan gradien Sobel untuk mendapatkan peta tepi dari citra luka. Berikut \emph{source code} yang bekerja dengan baik untuk menghasilkan energi eksternal:
@@ -102,7 +102,7 @@ Untuk versi \emph{integer} energi eksternal menggunakan persamaan (\ref{eext2}).
 	\caption{\emph{source code} energi eksternal untuk \emph{snake} versi interpolasi}
 	\label{Gambar:external_float}
 \end{figure}
-Penulis mengimplementasi energi eksternal dengan memanggil beberapa fungsi dari \emph{library scikit-image}. Fungsi \texttt{gaussian} menghasilkan citra gaussian $G_{\sigma} (x,y) * I(x,y)$ dengan standar deviasi \texttt{sigma}, sedangkan yang dihasilkan fungsi \texttt{sobel} adalah besar gradien sobel, sesuai dengan persamaan (\ref{sobel_mag}). Energi eksternal disimpan kedalam variabel \texttt{ext}. Rincian hasil dari proses ini tersedia di bagian \emph{lampiran C dan D}.
+Penulis mengimplementasi energi eksternal dengan memanggil beberapa fungsi dari \emph{library scikit-image}. Fungsi \texttt{gaussian} menghasilkan citra gaussian $G_{\sigma} (x,y) * I(x,y)$ dengan standar deviasi \texttt{sigma}, sedangkan yang dihasilkan fungsi \texttt{sobel} adalah besar gradien sobel, sesuai dengan persamaan (\ref{sobel_mag}). Energi eksternal disimpan kedalam variabel \texttt{ext}. Rincian hasil dari proses ini tersedia di bagian \textbf{lampiran C dan D}.
 
 \subsection{Proses update intersi kurva}
 Berikut \emph{source code} yang bekerja dengan baik untuk proses update iterasi kurva atau dapat disebut \emph{snake evolution}:
@@ -216,7 +216,7 @@ Selanjutnya untuk proses update kurva versi \emph{integer} perhitungannya dapat 
 
 
 \section{Eksperimen}
-\emph{Source code} eksperimen disimpan ke dalam repository yang dapat diakses di \url{https://github.com/m-rizki/skripsi} di bawah lisensi \emph{GNU General Public License v3.0}. Rancangan eksperimen deteksi keliling luka menggunakan \emph{snake} dan \emph{snake} yang ditambahkan interpolasi dilakukan dengan menjalankan program \emph{snake} hingga kurva akhir menutupi objek luka pada citra untuk semua data (populasi) yang tersedia. Proses ini memerlukan penyesuaian parameter algoritma \emph{snake} untuk setiap citra. Dari hasil yang didapatkan terdapat dua kategori hasil deteksi, yang pertama adalah kurva hasil deteksi berhasil menutupi luka (berhasil) dan kurva hasil deteksi tidak berhasil menutupi luka (gagal). Rincian parameter dan hasil dari proses deteksi tersedia di bagian \emph{lampiran C dan D}
+\emph{Source code} eksperimen disimpan ke dalam repository yang dapat diakses di \url{https://github.com/m-rizki/skripsi} di bawah lisensi \emph{GNU General Public License v3.0}. Rancangan eksperimen deteksi keliling luka menggunakan \emph{snake} dan \emph{snake} yang ditambahkan interpolasi dilakukan dengan menjalankan program \emph{snake} hingga kurva akhir menutupi objek luka pada citra untuk semua data (populasi) yang tersedia. Proses ini memerlukan penyesuaian parameter algoritma \emph{snake} untuk setiap citra. Dari hasil yang didapatkan terdapat dua kategori hasil deteksi, yang pertama adalah kurva hasil deteksi berhasil menutupi luka (berhasil) dan kurva hasil deteksi tidak berhasil menutupi luka (gagal). Rincian parameter dan hasil dari proses deteksi tersedia di bagian \textbf{lampiran C dan D}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{gambar/result_good_bad}
@@ -224,7 +224,7 @@ Selanjutnya untuk proses update kurva versi \emph{integer} perhitungannya dapat 
 	\label{Gambar:result_good_bad}
 \end{figure}
 
-Setelah hasil dikateorikan, langkah selanjutnya adalah mengidentifikasi area kurva hasil deteksi \emph{snake} yang berhasil dan di bandingkan terhadap area \emph{ground truth} untuk kemudian dihitung akurasinya menggunakan persamaan (\ref{val}). Rincian hasil dari proses ini tersedia di bagian \emph{lampiran C dan D}
+Setelah hasil dikateorikan, langkah selanjutnya adalah mengidentifikasi area kurva hasil deteksi \emph{snake} yang berhasil dan di bandingkan terhadap area \emph{ground truth} untuk kemudian dihitung akurasinya menggunakan persamaan (\ref{val}). Rincian hasil dari proses ini tersedia di bagian \textbf{lampiran C dan D}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{gambar/result_val}
@@ -246,7 +246,7 @@ Berikut analisa hasil setelah melakukan eksperimen terhadap populasi:
 	\item Hasil dari deteksi keliling luka menggunakan \emph{snake} versi \emph{integer} untuk semua kategori menghasilkan 44 data (dari 71 data) yang kurva akhirnya berhasil menutupi luka dengan nilai akurasi rata-rata 86.1\%.
 \end{enumerate}
 
-Sebagai tambahan, setelah dicek kembali ternyata terdapat kesalahan pada saat proses update iterasi kurva untuk metode \emph{snake} versi \emph{integer}. Sebelumnya penulis melakukan pembulatan terhadap kurva di luar iterasi dan di dalam iterasi, tetapi ternyata seharusnya penulis cukup melakukan proses pembulatan pada saat perhitungan \texttt{fx} dan \texttt{fy} di dalam iterasi saja sehingga kurva akhirnya tetap terdiri dari koordinat yang nilainya \emph{float}. Jika dibandingkan hasilnya sebagai berikut.
+Sebagai tambahan, setelah dicek kembali ternyata terdapat kesalahan pada saat proses update iterasi kurva untuk metode \emph{snake} versi \emph{integer}. Sebelumnya penulis melakukan pembulatan terhadap kurva di luar iterasi dan di dalam iterasi, tetapi ternyata seharusnya penulis cukup melakukan proses pembulatan pada saat perhitungan \texttt{fx} dan \texttt{fy} di dalam iterasi saja sehingga kurva akhirnya tetap terdiri dari koordinat yang nilainya \emph{float}. Namun jika dibandingkan hasilnya tidak berbeda secara signifikan.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{gambar/compare_int}

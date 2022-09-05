@@ -41,10 +41,11 @@
 	r = cr + rad*np.sin(theta)
 	c = cc + rad*np.cos(theta)
 	snake_init = np.array([r, c]).T
+	snake_init = np.around(snake_init).astype(int)
 	
-	snake_xy = snake_init[:, ::-1]
-	x = snake_xy[:, 0]
-	y = snake_xy[:, 1]
+	snake_xy = snake_init[:, ::-1].astype(int)
+	x = snake_xy[:, 0].astype(int)
+	y = snake_xy[:, 1].astype(int)
 	n = len(x)
 	
 	fig0= plt.figure(frameon=False, figsize=(img.shape[1]/my_dpi, img.shape[0]/my_dpi), dpi=my_dpi)
@@ -113,14 +114,14 @@
 	fy = np.array([])
 	
 	for i in range(n):
-	fx = np.append(fx, gx[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
-	fy = np.append(fy, gy[np.round(yt[i]).astype(int)] [np.round(xt[i]).astype(int)] )
+	fx = np.append(fx, gx[yt[i]] [xt[i]] )
+	fy = np.append(fy, gy[yt[i]] [xt[i]] )
 	
 	xn = np.dot(inv, xt + gamma * fx) # acton, ivins equation
 	yn = np.dot(inv, yt + gamma * fy)
 	
-	xt = xn
-	yt = yn
+	xt = np.round(xn).astype(int)
+	yt = np.round(yn).astype(int)
 	
 	# ax2.plot(xt, yt, '-g', lw=2)
 	
