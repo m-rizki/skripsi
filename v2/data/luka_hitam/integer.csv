@@ -1,0 +1,6 @@
+filename,extension, center_r, center_c, radius, sigma, sample, alpha, beta, gamma, max_iter, status, accuracy
+5,jpg,160,190,115, 3.5, 100, 1, 10, 1, 100, berhasil,
+7,jpg,55,75,35, 3.5, 50, 1, 10, 1, 25, berhasil,
+8,jpg,153,255,45, 3.5, 50, 1, 10, 2, 100, berhasil,
+14,jpg,95,130,65, 3.5, 50, 1, 10, 2, 100, berhasil,
+28,jpg,120,80,60, 3.5, 200, 1, 10, 6, 50, berhasil,
