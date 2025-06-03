@@ -1,6 +1,6 @@
 # Deteksi Keliling Luka Kronis v2 (Refactor)
 
-Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi keliling luka kronis menggunakan Active Contour (Snake) dan variannya.
+Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi keliling luka kronis menggunakan _Active Contour (Snake)_ dan variannya.
 
 ## Motivasi Refaktor
 
@@ -11,25 +11,45 @@ Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi kelili
 
 ## Struktur Folder
 
-### `data/`
+```bash
+  |--data/              # Folder untuk menyimpan seluruh data input dan output gambar
+  |--notebooks/         # Jupyter Notebook untuk eksperimen, testing, dan catatan
+  |--utils.py           # Berisi fungsi-fungsi pembantu yang umum dan reusable
+  |--active_contour.py  # Berisi fungsi-fungsi utama untuk deteksi keliling menggunakan active contour (snake)
+  |--cli.py             # Program utama untuk batch processing
+```
 
-Folder untuk menyimpan seluruh data input dan output gambar
+## Petunjuk penggunaan
 
-### `notebooks/`
+Project ini menggunakan `venv` untuk mengelola _virtual environment_ dengan tujuan kompabilitas, `venv` membuat semua _environment_ yg digunakan terisolasi, sehingga tidak mengganggu versi python di perangkat anda.
 
-Jupyter Notebook untuk eksperimen, testing, dan catatan
+membuat _virtual environment_ dengan nama `env` (akan membuat folder _environment_ yg terisolasi)
 
-### `utils.py`
+```bash
+# powershell
+python -m venv env
+```
 
-Berisi fungsi-fungsi pembantu yang umum dan reusable
+Cara mengaktifkan _virtual environment_ di terminal anda sebagai berikut :
 
-### `active_contour.py`
+```bash
+# powershell
+.\env\Scripts\activate
+```
 
-Berisi fungsi-fungsi utama untuk deteksi keliling menggunakan active contour (snake)
+menginstal semua _package_ Python yang tercantum di dalam file `requirements.txt`
 
-### `cli.py`
+```bash
+# powershell mode virtual environment
+pip install -r requirements.txt
+```
 
-Program utama untuk batch processing
+menyimpan daftar semua _package_ Python (beserta versinya) yang saat ini terinstal di _environment_ kamu
+
+```bash
+# powershell mode virtual environment
+pip freeze > requirements.txt
+```
 
 ## Status
 
