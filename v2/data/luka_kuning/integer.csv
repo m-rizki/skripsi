@@ -1,6 +1,6 @@
-filename,extension, center_r, center_c, radius, sigma, sample, alpha, beta, gamma, max_iter, status, accuracy
-13,jpg,70,206,50, 3.5, 100, 1, 10, 2, 50, berhasil,
-19,jpg,60,60,50, 3.5, 100, 1, 10, 2, 100, berhasil,
-21,jpg,130,170,70, 3.5, 100, 1, 10, 2, 100, berhasil,
-25,jpg,145,130,55, 3.5, 100, 1, 10, 1, 100, berhasil,
-34,jpg,185,245,130, 3.5, 100, 1, 10, 1, 100, berhasil,
+filename,extension, center_r, center_c, radius, sigma, sample, alpha, beta, gamma, max_iter, accuracy
+13,jpg,70,206,50, 3.5, 100, 1, 10, 2, 50
+19,jpg,60,60,50, 3.5, 100, 1, 10, 2, 100
+21,jpg,130,170,70, 3.5, 100, 1, 10, 2, 100
+25,jpg,145,130,55, 3.5, 100, 1, 10, 1, 100
+34,jpg,185,245,130, 3.5, 100, 1, 10, 1, 100
