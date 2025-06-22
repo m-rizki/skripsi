@@ -14,28 +14,50 @@ Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi kelili
 ```bash
 v2/
 |
-|- data/                            # Folder untuk menyimpan seluruh data input dan output gambar
-|   |- luka_hitam/                  # Dataset gambar luka dengan karakteristik warna hitam
-|       |- images/                  # Subfolder berisi file gambar
-|       |   |- 2.jpg                # Contoh nama file gambar luka
-|       |- integer.csv              # File CSV berisi parameter dan hasil deteksi dengan acm integer
-|       |- interpolation.csv        # File CSV berisi parameter dan hasil deteksi dengan interpolasi
-|   |- luka_kuning/                 # Dataset gambar luka dengan karakteristik warna kuning
-|   |- luka_merah/                  # Dataset gambar luka dengan karakteristik warna merah
+|- data/                            # Folder untuk menyimpan seluruh dataset
 |
 |- notebooks/                       # Jupyter Notebook untuk eksperimen, testing, dan catatan
-|   |- 01_acm_integer.ipynb         # Notebook untuk eksperimen Active Contour integer
-|   |- 02_acm_interpolation.ipynb   # Notebook untuk eksperimen Active Contour dengan interpolasi
+|   |- 01_acm_integer.ipynb
+|   |- 02_acm_interpolation.ipynb
 |
 |- src/                             # Folder kode sumber utama
 |   |- __init__.py                  # Menandai src sebagai package
 |   |- utils.py                     # Fungsi-fungsi pembantu (reusable)
 |   |- active_contour.py            # Fungsi-fungsi utama untuk deteksi keliling menggunakan active contour (snake)
-|   |- processing.py                # Entry point untuk batch processing dari command line
+|   |- processing.py                # Fungsi-fungsi pemrosesan snake
 |
 |- main.py                          # Entry point utama
 |- requirements.txt                 # Daftar dependency
 |- readme.md                        # Penjelasan proyek
+```
+
+## Struktur folder dataset
+
+```bash
+|- data/
+|   |- luka_hitam/                            # Folder dataset gambar luka dengan karakteristik warna hitam
+|       |- images/                            # Subfolder berisi file gambar yg siap di proses
+|       |   |- 5.jpg                          # Contoh nama file gambar luka
+|       |
+|       |- output/                            # Subfolder output
+|       |   |- integer/                       # Subfolder berisi file output hasil deteksi menggunakan acm integer
+|       |   |   |- 5.jpg                      # Contoh nama file gambar hasil deteksi
+|       |   |
+|       |   |- interpolation/                 # Subfolder berisi file output hasil deteksi menggunakan acm interpolasi
+|       |
+|       |- validation/                        # Subfolder validasi
+|       |   |- integer /                      # Subfolder berisi file output hasil deteksi menggunakan acm integer
+|       |   |   |- 5_val.jpg                  # Contoh nama file gambar hasil validasi (berdasarkan region)
+|       |   |   |- 5_region_result.jpg        # Contoh nama file gambar region kurva hasil deteksi
+|       |   |   |- 5_region_groundtruth.jpg   # Contoh nama file gambar region kurva groundtruth
+|       |   |
+|       |   |- interpolation                  # Subfolder berisi file output hasil deteksi menggunakan acm interpolasi
+|       |
+|       |- integer.csv                        # File CSV berisi parameter dan hasil deteksi dengan acm integer
+|       |- interpolation.csv                  # File CSV berisi parameter dan hasil deteksi dengan interpolasi
+|
+|   |- luka_kuning/                           # Folder dataset gambar luka dengan karakteristik warna kuning
+|   |- luka_merah/                            # Folder dataset gambar luka dengan karakteristik warna merah
 ```
 
 ## Petunjuk penggunaan

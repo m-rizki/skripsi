@@ -1,17 +1,14 @@
 from skimage.color import rgb2gray
 from skimage.io import imread
-from active_contour import InterpolationActiveContour, IntegerActiveContour
+from src.active_contour import InterpolationActiveContour, IntegerActiveContour
 
 
 class SnakeProcessor:
-    def __init__(self, dpi=96):
+    def __init__(self):
         """
         Inisialisasi prosesor.
 
-        Args:
-            dpi (int): DPI untuk menyimpan gambar
         """
-        self.dpi = dpi
         self.snake_contour = None
         self.initial_snake = None
         self.external_energy = None
@@ -79,7 +76,7 @@ class SnakeProcessor:
         self.initial_snake = initial_snake
         self.external_energy = external_energy
 
-        return img, final_snake, external_energy
+        return img, img_gray, initial_snake, final_snake, external_energy
 
     def process_with_interpolation(
         self,
@@ -133,4 +130,4 @@ class SnakeProcessor:
         self.initial_snake = initial_snake
         self.external_energy = external_energy
 
-        return img, final_snake, external_energy
+        return img, img_gray, initial_snake, final_snake, external_energy
