@@ -4,6 +4,7 @@ from src.utils import (
     load_dataframes,
     process_wound_batch,
     create_output_directories,
+    create_validation_directories,
 )
 
 
@@ -16,9 +17,13 @@ def main():
 
     data_paths = config.get_data_paths()
     output_paths = config.get_output_paths()
+    validation_paths = config.get_validation_paths()
 
     print("Creating output directories...")
     create_output_directories(output_paths)
+
+    print("Creating validation directories...")
+    create_validation_directories(validation_paths)
 
     print("Initializing snake processor...")
     processor = SnakeProcessor()
@@ -33,12 +38,15 @@ def main():
             df = dataframes[wound_type][method]
             data_path = data_paths[wound_type]
             output_path = output_paths[wound_type][method]
+            validation_path = validation_paths[wound_type][method]
+            print(validation_path)
 
             process_wound_batch(
                 processor=processor,
                 dataframe=df,
                 data_path=data_path,
                 output_path=output_path,
+                validation_path=validation_path,
                 method=method,
                 dpi=config.MY_DPI,
             )
@@ -46,6 +54,8 @@ def main():
             print(f"    Processed {len(df)} images for {wound_type}-{method}")
 
     print("\nAll processing completed!")
+
+    # TODO: Batch validasi region snake akhir dengan region groundtruth
 
 
 if __name__ == "__main__":

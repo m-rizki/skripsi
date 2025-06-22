@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from typing import Tuple, Dict
 import os
+import numpy as np
 
 
 class DataConfig:
@@ -29,6 +30,16 @@ class DataConfig:
                 for method in self.processing_methods
             }
         return output_paths
+
+    def get_validation_paths(self) -> Dict[str, Dict[str, str]]:
+        """Mengambil path validation untuk semua tipe luka dan metode"""
+        val_path = {}
+        for wound_type in self.wound_types:
+            val_path[wound_type] = {
+                method: f"./data/luka_{wound_type}/validation/{method}"
+                for method in self.processing_methods
+            }
+        return val_path
 
 
 def load_dataframes() -> Dict[str, Dict[str, pd.DataFrame]]:
@@ -107,11 +118,38 @@ def create_and_save_result_image(
     plt.close(snake_final_fig)
 
 
+def create_and_save_final_snake_region_image(
+    img,
+    final_snake,
+    filename: str,
+    file_extension: str,
+    output_path: str,
+    dpi: int = 120,
+) -> None:
+    """Membuat dan menyimpan gambar region kontur akhir snake"""
+    # Memastikan output directory ada
+    os.makedirs(output_path, exist_ok=True)
+
+    snake_final_region_fig = plt.figure(
+        frameon=False, figsize=(img.shape[1] / dpi, img.shape[0] / dpi), dpi=dpi
+    )
+    snake_final_region_ax = snake_final_region_fig.add_axes([0, 0, 1, 1])
+    snake_final_region_ax.imshow(np.ones(img.shape))
+    snake_final_region_ax.fill(final_snake[:, 0], final_snake[:, 1], color="black")
+    snake_final_region_ax.set_xticks([]), snake_final_region_ax.set_yticks([])
+    snake_final_region_ax.axis("off")
+
+    output_name = f"{filename}_region_result.{file_extension}"
+    plt.savefig(f"{output_path}/{output_name}", dpi=dpi)
+    plt.close(snake_final_region_fig)
+
+
 def process_wound_batch(
     processor,
     dataframe: pd.DataFrame,
     data_path: str,
     output_path: str,
+    validation_path: str,
     method: str,
     dpi: int = 120,
 ) -> None:
@@ -168,11 +206,33 @@ def process_wound_batch(
             raise ValueError(f"Unknown processing method: {method}")
 
         create_and_save_result_image(
-            img, initial_snake, final_snake, filename, file_extension, output_path, dpi
+            img=img,
+            initial_snake=initial_snake,
+            final_snake=final_snake,
+            filename=filename,
+            file_extension=file_extension,
+            output_path=output_path,
+            dpi=dpi,
+        )
+
+        create_and_save_final_snake_region_image(
+            img=img,
+            final_snake=final_snake,
+            filename=filename,
+            file_extension=file_extension,
+            output_path=validation_path,
+            dpi=dpi,
         )
 
 
 def create_output_directories(output_paths: Dict[str, Dict[str, str]]) -> None:
+    """Membuat direktori output yang diperlukan"""
+    for wound_type, paths in output_paths.items():
+        for method, path in paths.items():
+            os.makedirs(path, exist_ok=True)
+
+
+def create_validation_directories(output_paths: Dict[str, Dict[str, str]]) -> None:
     """Membuat direktori output yang diperlukan"""
     for wound_type, paths in output_paths.items():
         for method, path in paths.items():
