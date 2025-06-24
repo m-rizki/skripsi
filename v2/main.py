@@ -5,6 +5,7 @@ from src.utils import (
     process_wound_batch,
     create_output_directories,
     create_validation_directories,
+    validate_results,
 )
 
 
@@ -30,7 +31,7 @@ def main():
 
     # Memproses semua kombinasi jenis deteksi
     for wound_type in config.wound_types:
-        print(f"\nProcessing {wound_type} wounds...")
+        print(f"\nProcessing Luka {wound_type}")
 
         for method in config.processing_methods:
             print(f"  Using {method} method...")
@@ -39,7 +40,6 @@ def main():
             data_path = data_paths[wound_type]
             output_path = output_paths[wound_type][method]
             validation_path = validation_paths[wound_type][method]
-            print(validation_path)
 
             process_wound_batch(
                 processor=processor,
@@ -55,7 +55,27 @@ def main():
 
     print("\nAll processing completed!")
 
-    # TODO: Batch validasi region snake akhir dengan region groundtruth
+    # Validasi hasil deteksi
+    for wound_type in config.wound_types:
+        print(f"\nValidating Luka {wound_type}...")
+
+        for method in config.processing_methods:
+            print(f"  Using {method} method...")
+
+            df = dataframes[wound_type][method]
+            output_path = output_paths[wound_type][method]
+            validation_path = validation_paths[wound_type][method]
+
+            validate_results(
+                dataframe=df,
+                output_path=output_path,
+                validation_path=validation_path,
+                dpi=config.MY_DPI,
+            )
+
+            print(f"    Processed {len(df)} images for {wound_type}-{method}")
+
+    print("\nAll processing completed!")
 
 
 if __name__ == "__main__":

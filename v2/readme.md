@@ -7,7 +7,6 @@ Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi kelili
 - Merapikan struktur kode agar lebih mudah dipahami dan dikembangkan
 - Modularisasi dan pemisahan fungsi-fungsi utama
 - Penambahan dokumentasi dan komentar kode
-- Memudahkan penambahan fitur atau pengujian metode baru
 
 ## Struktur Folder
 
@@ -53,8 +52,8 @@ v2/
 |       |   |
 |       |   |- interpolation                  # Subfolder berisi file output hasil deteksi menggunakan acm interpolasi
 |       |
-|       |- integer.csv                        # File CSV berisi parameter dan hasil deteksi dengan acm integer
-|       |- interpolation.csv                  # File CSV berisi parameter dan hasil deteksi dengan interpolasi
+|       |- integer.csv                        # File CSV berisi parameter deteksi dengan acm integer
+|       |- interpolation.csv                  # File CSV berisi parameter deteksi dengan interpolasi
 |
 |   |- luka_kuning/                           # Folder dataset gambar luka dengan karakteristik warna kuning
 |   |- luka_merah/                            # Folder dataset gambar luka dengan karakteristik warna merah
@@ -90,6 +89,13 @@ menyimpan daftar semua _package_ Python (beserta versinya) yang saat ini terinst
 ```bash
 # powershell mode virtual environment
 pip freeze > requirements.txt
+```
+
+menjalankan batch processing active contour melalui main.py
+
+```bash
+# powershell mode virtual environment
+python main.py
 ```
 
 ## Status
