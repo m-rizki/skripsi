@@ -6,7 +6,7 @@ Versi 2 ini merupakan refaktor dari implementasi sebelumnya untuk deteksi kelili
 
 - Merapikan struktur kode agar lebih mudah dipahami dan dikembangkan
 - Modularisasi dan pemisahan fungsi-fungsi utama
-- Penambahan dokumentasi dan komentar kode
+- Penambahan dokumentasi dan komentar kode, serta petunjuk penggunaan
 
 ## Struktur Folder
 
